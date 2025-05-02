@@ -1,0 +1,4 @@
+baseURL = 'https://julipetric.github.io/music-portfolio/'
+languageCode = 'en-us'
+title = 'Julian Petric - Music Portfolio'
+theme = 'ananke'
