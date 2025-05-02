@@ -1,6 +1,5 @@
 +++
 date = '2025-05-02T16:04:36-03:00'
-draft = true
 title = 'My Mixes'
 +++
 This are examples of my work mixing provided multi-track material.
