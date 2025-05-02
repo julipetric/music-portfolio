@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Living In The City on Music Portfolio</title>
+    <link>http://localhost:1313/music-portfolio/mixes/livinginthecity/</link>
+    <description>Recent content in Living In The City on Music Portfolio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>julipetric@gmail.com (Julián Petric)</managingEditor>
+    <webMaster>julipetric@gmail.com (Julián Petric)</webMaster>
+    <copyright>© 2025 Julián Petric</copyright>
+    <lastBuildDate>Fri, 02 May 2025 16:04:36 -0300</lastBuildDate><atom:link href="http://localhost:1313/music-portfolio/mixes/livinginthecity/index.xml" rel="self" type="application/rss+xml" />
+    
+  </channel>
+</rss>

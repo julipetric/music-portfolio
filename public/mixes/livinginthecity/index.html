@@ -102,7 +102,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "0"
+    "wordCount": "4"
   }]
   </script>
 
@@ -412,7 +412,11 @@
 
 
 
+  
 
+
+
+  
 
 
 
@@ -429,7 +433,7 @@
 <div class="flex flex-row flex-wrap items-center">
   
   
-  <time datetime="2025-05-02T16:04:36-03:00">2 May 2025</time>
+  <time datetime="2025-05-02T16:04:36-03:00">2 May 2025</time><span class="px-2 text-primary-500">&middot;</span><span>4 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">1 min</span>
   
 
   
@@ -488,7 +492,7 @@
     </div>
     
     
-    <div class="text-sm text-neutral-700 dark:text-neutral-400">A little bit about you</div>
+    <div class="text-sm text-neutral-700 dark:text-neutral-400">Software engineer. Passionate about music.</div>
     
     <div class="text-2xl sm:text-lg">
   <div class="flex flex-wrap text-neutral-400 dark:text-neutral-500">
@@ -557,7 +561,68 @@
 
 
         <div class="article-content max-w-prose mb-20">
-          
+          <html lang="en">
+<head>
+ <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A/B Player</title>
+    <meta
+      name="description"
+      content="Toggle between two audio files to compare"
+    />
+    <meta name="author" content="Matt Bartley" />
+    <meta property="og:title" content="A/B Audio Player" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:description"
+      content="Toggle between two audio files to compare"
+    />
+    <meta property="og:image" content="image.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./index.css" />
+</head>
+<body>
+<div>
+    <div>
+      <div
+        class="player__wrapper"
+        data-audio-a="./LivingInTheCity_Full_Preview_minus6.5db.mp3"
+        data-audio-b="./HurrayForTheRiffRaff_LivinInTheCity_Mixed_202502051218_withoutintro.mp3"
+      >
+        <div class="progress__container progress">
+          <div class="progress__bar progress__fill"></div>
+        </div>
+        <div class="ab__controls">
+          <button class="ab__button a__button" disabled="true">A</button>
+          <button class="ab__button b__button" disabled="true">B</button>
+        </div>
+        <div class="play__stop__controls">
+          <button class="play__pause__button play__button" disabled="true">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button class="play__pause__button stop__button" disabled="true">
+            <i class="fa-solid fa-stop"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="./ab-player.js"></script>
+</body>
+</html>
           
           
           
@@ -579,8 +644,8 @@
           
         
       <script>
-        var oid = "views_mixes\\LivingInTheCity.md"
-        var oid_likes = "likes_mixes\\LivingInTheCity.md"
+        var oid = "views_mixes\\LivingInTheCity\\index.md"
+        var oid_likes = "likes_mixes\\LivingInTheCity\\index.md"
       </script>
       
       
@@ -598,7 +663,13 @@
   </footer>
 </article>
 
-      
+      <div id="top-scroller" class="pointer-events-none absolute top-[110vh] bottom-0 w-12 ltr:right-0 rtl:left-0">
+  <a href="#the-top"
+    class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 mb-16 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Scroll to top" title="Scroll to top">
+    &uarr;
+  </a>
+</div>
     </main><footer id="site-footer" class="py-10 print:hidden">
   
   

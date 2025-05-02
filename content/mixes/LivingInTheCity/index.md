@@ -1,0 +1,71 @@
++++
+date = '2025-05-02T16:04:36-03:00'
+draft = true
+title = 'Living In The City'
++++
+
+
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A/B Player</title>
+    <meta
+      name="description"
+      content="Toggle between two audio files to compare"
+    />
+    <meta name="author" content="Matt Bartley" />
+    <meta property="og:title" content="A/B Audio Player" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:description"
+      content="Toggle between two audio files to compare"
+    />
+    <meta property="og:image" content="image.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+<div>
+    <div>
+      <div
+        class="player__wrapper"
+        data-audio-a="./LivingInTheCity_Full_Preview_minus6.5db.mp3"
+        data-audio-b="./HurrayForTheRiffRaff_LivinInTheCity_Mixed_202502051218_withoutintro.mp3"
+      >
+        <div class="progress__container progress">
+          <div class="progress__bar progress__fill"></div>
+        </div>
+        <div class="ab__controls">
+          <button class="ab__button a__button" disabled="true">A</button>
+          <button class="ab__button b__button" disabled="true">B</button>
+        </div>
+        <div class="play__stop__controls">
+          <button class="play__pause__button play__button" disabled="true">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button class="play__pause__button stop__button" disabled="true">
+            <i class="fa-solid fa-stop"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="./ab-player.js"></script>
+</body>
+
+</html>
