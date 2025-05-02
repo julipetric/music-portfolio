@@ -4,6 +4,11 @@ draft = true
 title = 'Living In The City'
 +++
 
+## Living In The City - Hurray For the Riff Raff
+
+(taken from ["'Mixing Secrets' Free Multitrack Download Library"](https://www.cambridge-mt.com/ms/mtk/#topAnchor))
+1. The "preview" file provided by CMT's library
+2. My finished mix (no mastering)
 
 <html lang="en">
 <head>
