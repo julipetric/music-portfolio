@@ -1,5 +1,6 @@
 {{ $js := resources.Get "js/ab-player-v4.js" | js.Build | fingerprint "sha256"
 }}
+{{ $style := resources.Get "css/ab-player.css" }}
 
 <html lang="en">
   <head>
@@ -33,7 +34,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="{{ $style.Permalink }}"/>
   </head>
 
   <body>
@@ -47,10 +48,10 @@
         </div>
         <div class="ab__controls">
           <button class="ab__button a__button" disabled="true">1</button>
-          <button class="ab__button b__button" disabled="true">2</button>
           {{ if .Get "data-audio-c" }}
-          <button class="ab__button c__button" disabled="true">3</button>
+          <button class="ab__button c__button" disabled="true">2</button>
           {{ end }}
+          <button class="ab__button b__button" disabled="true"> {{ if .Get "data-audio-c" }}3{{ else }}2{{ end }}</button>
         </div>
         <div class="play__stop__controls">
           <button class="play__pause__button play__button" disabled="true">

@@ -8,7 +8,7 @@
 }
 
 .ab__controls {
-  display: grid;
+  display: flex;
   align-content: center;
   align-items: baseline;
   grid-template-columns: 1fr 1fr;
@@ -46,14 +46,20 @@ button:hover {
 }
 
 .a__button {
-  width: 8rem;
+  flex: 1;
   border-radius: 12px 0 0 12px;
   justify-self: self-end;
 }
 
 .b__button {
-  width: 8rem;
+  flex: 1;
   border-radius: 0 12px 12px 0;
+  justify-self: self-start;
+}
+
+.c__button {
+  flex: 1;
+  border-radius: 0;
   justify-self: self-start;
 }
 
