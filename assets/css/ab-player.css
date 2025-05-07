@@ -7,7 +7,7 @@
   margin: 20px 2vw;
 }
 
-.ab__controls {
+.player__wrapper .ab__controls {
   display: flex;
   align-content: center;
   align-items: baseline;
@@ -17,7 +17,7 @@
   width: 100%;
 }
 
-button {
+.player__wrapper button {
   font-size: 1.3rem;
   text-transform: uppercase;
   border: none;
@@ -31,53 +31,55 @@ button {
   transition: all ease-in-out 0.3s;
 }
 
-button:disabled {
+.player__wrapper button:disabled {
   color: #c9c9c9;
   box-shadow: inset 7px 7px 15px #cdcdcd, inset -7px -7px 15px #ffffff;
   transition: all ease-in-out 0.3s;
 }
-button:disabled:hover {
+
+.player__wrapper button:disabled:hover {
   color: #c9c9c9;
   box-shadow: inset 5px 5px 15px #cdcdcd, inset -5px -5px 15px #ffffff;
 }
 
-button:hover {
+.player__wrapper button:hover {
   box-shadow: 4px 4px 15px #cdcdcd, -4px -4px 15px #ffffff;
 }
 
-.a__button {
+.player__wrapper .a__button {
   flex: 1;
   border-radius: 12px 0 0 12px;
   justify-self: self-end;
 }
 
-.b__button {
+.player__wrapper .b__button {
   flex: 1;
   border-radius: 0 12px 12px 0;
   justify-self: self-start;
 }
 
-.c__button {
+.player__wrapper .c__button {
   flex: 1;
   border-radius: 0;
   justify-self: self-start;
+  box-shadow: 7px 7px 15px #cdcdcd, -7px -7px 15px #ffffff;
 }
 
-.play__button {
+.player__wrapper .play__button {
   justify-self: self-end;
 }
 
-.stop__button {
+.player__wrapper .stop__button {
   width: 5rem;
   color: #966f6f;
   justify-self: self-start;
 }
 
-.stop__button:disabled {
+.player__wrapper .stop__button:disabled {
   color: #966f6fd3;
 }
 
-.play__stop__controls {
+.player__wrapper .play__stop__controls {
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -85,7 +87,7 @@ button:hover {
   grid-gap: 1rem;
 }
 
-.progress__container {
+.player__wrapper .progress__container {
   display: inline-flex;
   background: #a8a8a8;
   height: 1rem;
@@ -100,13 +102,13 @@ button:hover {
   overflow: hidden;
 }
 
-.progress__bar {
+.player__wrapper .progress__bar {
   background: linear-gradient(360deg, #2da87b, #34dcacfa);
   border-radius: 12px;
   transition: all ease-in-out 0.03s;
 }
 
-.progress__fill {
+.player__wrapper .progress__fill {
   width: 0%;
 }
 
