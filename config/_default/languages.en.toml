@@ -11,7 +11,7 @@ title = "Music Portfolio"
   dateFormat = "2 January 2006"
   # logo = "img/logo.png"
   # secondaryLogo = "img/secondary-logo.png"
-  # description = "A personal website dedicated to showcasing my music-related works. Mixing, mastering, and own compositions."
+  description = "A personal website dedicated to showcasing my music-related works. Mixing, mastering, and own compositions."
   # copyright = "Copy, _right?_ :thinking_face:"
 
 [params.author]
@@ -20,7 +20,7 @@ title = "Music Portfolio"
   image = "img/about-me.jpeg"
   imageQuality = 96
   headline = "Software engineer. Passionate about music."
-  bio = "Software engineer. Passionate about music."
+  bio = "Lallala"
   links = [
     { email = "mailto:julipetric@gmail.com" },
 #     { link = "https://link-to-some-website.com/" },
