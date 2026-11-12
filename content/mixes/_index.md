@@ -3,7 +3,7 @@ date = '2025-05-02T16:04:36-03:00'
 title = 'My Mixes'
 +++
 
-This are examples of my work mixing provided multi-track material.
+These are examples of my work mixing provided multi-track material.
 
 All of the examples here are taken from the Cambridge Music Technology's ["'Mixing Secrets' Free Multitrack Download Library"](https://www.cambridge-mt.com/ms/mtk/#topAnchor).
 For better appreciation of the work done, for each song, you can compare in real time:
