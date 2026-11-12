@@ -1,0 +1,47 @@
+{{- /*
+  A/B(/C) comparison player for versions of the same song.
+
+  Parameters (paths relative to the page bundle):
+    data-audio-a  required  version on button 1
+    data-audio-c  optional  version on button 2 (when present, data-audio-b moves to button 3)
+    data-audio-b  required  version on the last button
+
+  Styles, icons and the script are emitted once per page, so several players can share a page.
+*/ -}}
+{{- $audioA := .Get "data-audio-a" -}}
+{{- $audioB := .Get "data-audio-b" -}}
+{{- $audioC := .Get "data-audio-c" -}}
+{{- if not (and $audioA $audioB) -}}
+  {{- errorf "ab-player: data-audio-a and data-audio-b are required (%s)" .Position -}}
+{{- end -}}
+{{- if not (.Page.Store.Get "abPlayerAssets") -}}
+  {{- .Page.Store.Set "abPlayerAssets" true -}}
+  {{- $style := resources.Get "css/ab-player.css" | minify | fingerprint "sha256" -}}
+  {{- $js := resources.Get "js/ab-player.js" | js.Build (dict "minify" true) | fingerprint "sha256" }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" />
+<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{- end }}
+<div class="player__wrapper" data-audio-a="{{ $audioA }}" data-audio-b="{{ $audioB }}"
+  {{- with $audioC }} data-audio-c="{{ . }}"{{ end }}>
+  <div class="progress__container progress">
+    <div class="progress__bar progress__fill"></div>
+  </div>
+  <div class="ab__controls">
+    <button class="ab__button a__button" disabled>1</button>
+    {{- if $audioC }}
+    <button class="ab__button c__button" disabled>2</button>
+    {{- end }}
+    <button class="ab__button b__button" disabled>{{ if $audioC }}3{{ else }}2{{ end }}</button>
+  </div>
+  <div class="play__stop__controls">
+    <button class="play__pause__button play__button" aria-label="Play">
+      <i class="fa-solid fa-play"></i>
+    </button>
+    <button class="play__pause__button stop__button" aria-label="Stop" disabled>
+      <i class="fa-solid fa-stop"></i>
+    </button>
+  </div>
+</div>

@@ -11,7 +11,7 @@ title = 'Living In The City'
 2. The "preview" file provided by CMT's library
 3. My finished mix (no mastering)
 
-{{< ab-player/index
+{{< ab-player
 data-audio-a="./HurrayForTheRiffRaff_LivinInTheCity_VolumesOnly_without_intro.mp3"
 data-audio-c="./LivingInTheCity_Full_Preview_minus6.5db.mp3"
 data-audio-b="./HurrayForTheRiffRaff_LivinInTheCity_Mixed_202505071917_without_intro.mp3" >}}

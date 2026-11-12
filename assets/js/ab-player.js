@@ -1,230 +1,128 @@
-let players = document.querySelectorAll('.player__wrapper');
+/*
+ * A/B(/C) audio comparison player.
+ *
+ * Each `.player__wrapper` holds two or three versions of the same song (data-audio-a,
+ * data-audio-b and the optional data-audio-c). All versions share one playhead: switching
+ * tracks keeps the position, so the listener hears the same passage in another version.
+ *
+ * Based on AB-Audio-Player by Matt Bartley (MIT License, Copyright (c) 2022 Matt Bartley):
+ * https://github.com/mattbartley/AB-Audio-Player
+ */
 
-initializePlayers(players);
+document.querySelectorAll('.player__wrapper').forEach(initializePlayer);
 
-function initializePlayers(players) {
-
-  players.forEach((player) => {
-
-    const audioA = player.getAttribute('data-audio-a');
-    const audioB = player.getAttribute('data-audio-b');
-    const audioC = player.getAttribute('data-audio-c');
-
-    console.log('audioA', audioA);
-    console.log('audioB', audioB);
-
-    //Set up audio elements
-    var soundA = document.createElement('audio');
-    //Set audio A src here
-    soundA.src = audioA;
-    soundA.preload = 'auto';
-    soundA.setAttribute('hidden', 'true');
-    soundA.setAttribute('type', 'audio/mpeg');
-    document.body.append(soundA);
-
-    var soundB = document.createElement('audio');
-    //Set audio B src here
-    soundB.src = audioB;
-    soundB.preload = 'auto';
-    soundB.setAttribute('hidden', 'true');
-    soundB.setAttribute('type', 'audio/mpeg');
-    document.body.append(soundB);
-
-    if(audioC) {
-      var soundC = document.createElement('audio');
-      //Set audio C src here
-      soundC.src = audioC;
-      soundC.preload = 'auto';
-      soundC.setAttribute('hidden', 'true');
-      soundC.setAttribute('type', 'audio/mpeg');
-      document.body.append(soundC);
-    }
-
-    //Get button elements
-    const aButton = player.querySelector('.a__button');
-    const bButton = player.querySelector('.b__button');
-    const playButton = player.querySelector('.play__button');
-    const stopButton = player.querySelector('.stop__button');
-    const progressBar = player.querySelector('.progress__bar');
-    const progressFill = player.querySelector('.progress__fill');
-
-    const playIcon = '<i class="fa-solid fa-play"></i>';
-    const pauseIcon = '<i class="fa-solid fa-pause"></i>';
-    const stopIcon = '<i class="fa-solid fa-stop"></i>';
-
-    //Check for mobile to enable audio playback without waiting for download status.
-    if (
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      )
-    ) {
-      playButton.disabled = false;
-    }
-
-    //Default loading state for each sound
-    var soundAReady = false;
-    var soundBReady = false;
-
-    //When audio can play through (loaded), run the function to enable buttons
-    //The canplaythrough event will fire every time the audio switches, so the !soundA/BReady prevents additional checks
-    soundA.oncanplaythrough = function () {
-      if (!soundAReady) {
-        soundAReady = true;
-        audioIsReady();
-      }
-    };
-    soundB.oncanplaythrough = function () {
-      if (!soundBReady) {
-        soundBReady = true;
-        audioIsReady();
-      }
-    };
-
-    // Check if both A & B are ready and enable the correct buttons
-    function audioIsReady() {
-      if (soundAReady && soundBReady) {
-        console.log('...audio loaded!');
-        aButton.disabled = false;
-        playButton.disabled = false;
-      } else {
-        console.log('Audio loading...');
-      }
-    }
-
-    const progress = player.querySelector('.progress');
-    // Listen for click on entire progress bar div (to allow skipping ahead)
-    progress.addEventListener('click', function (event) {
-      // Get X coordinate of click in div
-      var rect = this.getBoundingClientRect();
-      // Convert click position to percentage value
-      var percentage = (event.clientX - rect.left) / this.offsetWidth;
-      // Seek to the percentage converted to seconds
-      soundA.currentTime = percentage * soundA.duration;
-      soundB.currentTime = percentage * soundB.duration;
+function initializePlayer(player) {
+  const sounds = ['a', 'b', 'c']
+    .map((key) => player.getAttribute(`data-audio-${key}`))
+    .map((src) => {
+      if (!src) return null;
+      const sound = new Audio(src);
+      sound.preload = 'auto';
+      return sound;
     });
+  const [soundA, soundB, soundC] = sounds;
+  const allSounds = sounds.filter(Boolean);
 
-    //Play/Stop correct audio and toggle A/B, Play/Pause, and Stop buttons
-    function playPause() {
-      if (soundA.paused & soundB.paused) {
-        let soundATime = soundA.currentTime;
-        let soundBTime = soundB.currentTime;
-        if (soundATime >= soundBTime) {
-          soundA.play();
-          bButton.disabled = false;
-          aButton.disabled = true;
-          playButton.innerHTML = pauseIcon;
-        } else {
-          soundB.play();
-          bButton.disabled = true;
-          aButton.disabled = false;
-          playButton.innerHTML = pauseIcon;
-        }
-        stopButton.disabled = false;
-      } else {
-        playButton.innerHTML = playIcon;
-        soundA.pause();
-        soundB.pause();
-      }
-    }
+  const aButton = player.querySelector('.a__button');
+  const bButton = player.querySelector('.b__button');
+  const cButton = player.querySelector('.c__button');
+  const trackButtons = [aButton, bButton, cButton].filter(Boolean);
+  const playButton = player.querySelector('.play__button');
+  const stopButton = player.querySelector('.stop__button');
+  const progressBar = player.querySelector('.progress');
+  const progressFill = player.querySelector('.progress__fill');
 
-    aButton.addEventListener('click', (e) => {
+  const playIcon = '<i class="fa-solid fa-play"></i>';
+  const pauseIcon = '<i class="fa-solid fa-pause"></i>';
+  const playButtonPressedClass = 'play__button--pressed';
+
+  // Track A is the selected version until the listener picks another one.
+  let currentSound = soundA;
+
+  const updateProgress = () => {
+    const ratio = currentSound && currentSound.duration
+      ? currentSound.currentTime / currentSound.duration
+      : 0;
+    progressFill.style.width = `${ratio * 100}%`;
+    requestAnimationFrame(updateProgress);
+  };
+
+  const showPlaying = (playing) => {
+    playButton.innerHTML = playing ? pauseIcon : playIcon;
+    playButton.classList.toggle(playButtonPressedClass, playing);
+    playButton.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  };
+
+  const playCurrent = () => {
+    currentSound.play().catch((error) => console.error('Playback failed:', error));
+    showPlaying(true);
+    stopButton.disabled = false;
+  };
+
+  const pauseAll = () => {
+    allSounds.forEach((sound) => sound.pause());
+    showPlaying(false);
+  };
+
+  const seekAll = (time) => {
+    allSounds.forEach((sound) => {
+      sound.currentTime = time;
+    });
+  };
+
+  const stopAll = () => {
+    pauseAll();
+    seekAll(0);
+    stopButton.disabled = true;
+  };
+
+  const selectTrack = (sound, button) => {
+    // Only the selected version plays, so its position is the shared playhead.
+    const position = currentSound ? currentSound.currentTime : 0;
+    pauseAll();
+    seekAll(position);
+    currentSound = sound;
+    trackButtons.forEach((trackButton) => {
+      trackButton.disabled = trackButton === button;
+    });
+    playCurrent();
+  };
+
+  aButton.addEventListener('click', () => selectTrack(soundA, aButton));
+  bButton.addEventListener('click', () => selectTrack(soundB, bButton));
+  if (cButton && soundC) {
+    cButton.addEventListener('click', () => selectTrack(soundC, cButton));
+  }
+
+  playButton.addEventListener('click', () => {
+    if (currentSound.paused) {
+      playCurrent();
+    } else {
       pauseAll();
-      playButton.innerHTML = pauseIcon;
-      aButton.disabled = true;
-      bButton.disabled = false;
-      stopButton.disabled = false;
-      if (soundB.currentTime > 0) {
-        soundA.currentTime = soundB.currentTime;
-        soundA.play();
-        soundB.pause();
-      } else {
-        soundA.play();
-        soundB.pause();
-      }
-    });
-
-    bButton.addEventListener('click', (e) => {
-      pauseAll();
-      playButton.innerHTML = pauseIcon;
-      bButton.disabled = true;
-      aButton.disabled = false;
-
-      stopButton.disabled = false;
-      if (soundA.currentTime > 0) {
-        soundB.currentTime = soundA.currentTime;
-        soundB.play();
-        soundA.pause();
-      } else {
-        soundB.play();
-      }
-    });
-
-    playButton.addEventListener('click', (e) => {
-      let allAudio = document.querySelectorAll('audio');
-      let allButtons = document.querySelectorAll('.play__button');
-      for (let i = 0; i < allAudio.length; i++) {
-        if (allAudio[i] !== soundA && allAudio[i] !== soundB) {
-          allAudio[i].pause();
-        }
-      }
-      for (let i = 0; i < allButtons.length; i++) {
-        if (allButtons[i] !== playButton) {
-          allButtons[i].innerHTML = playIcon;
-        }
-      }
-      playPause();
-    });
-
-    stopButton.addEventListener('click', (e) => {
-      stopSounds();
-    });
-
-    soundA.addEventListener('playing', (e) => {
-      console.log('playing a');
-      progressFill.style.width =
-        ((soundA.currentTime / soundA.duration) * 100 || 0) + '%';
-      requestAnimationFrame(stepA);
-    });
-
-    soundB.addEventListener('playing', (e) => {
-      console.log('playing b');
-      progressFill.style.width =
-        ((soundB.currentTime / soundB.duration) * 100 || 0) + '%';
-      requestAnimationFrame(stepB);
-    });
-
-    const stopSounds = () => {
-      playButton.innerHTML = playIcon;
-      aButton.disabled = false;
-      bButton.disabled = true;
-      playButton.disabled = false;
-      stopButton.disabled = true;
-      soundA.pause();
-      soundA.currentTime = 0;
-      soundB.pause();
-      soundB.currentTime = 0;
-    };
-
-    function pauseAll() {
-      let allAudio = document.querySelectorAll('audio');
-      allAudio.forEach((audio) => {
-        audio.pause();
-      });
-      document.querySelectorAll('.play__button').forEach((button) => {
-        button.innerHTML = playIcon;
-      });
-    }
-
-    //Frame animations for progress bar fill - converts to CSS percentage
-    function stepA() {
-      progressFill.style.width =
-        ((soundA.currentTime / soundA.duration) * 100 || 0) + '%';
-      requestAnimationFrame(stepA);
-    }
-    function stepB() {
-      progressFill.style.width =
-        ((soundB.currentTime / soundB.duration) * 100 || 0) + '%';
-      requestAnimationFrame(stepB);
     }
   });
+
+  stopButton.addEventListener('click', stopAll);
+
+  progressBar.addEventListener('click', (event) => {
+    if (!currentSound.duration) return;
+    const rect = progressBar.getBoundingClientRect();
+    const ratio = (event.clientX - rect.left) / rect.width;
+    seekAll(ratio * currentSound.duration);
+  });
+
+  // When the selected version reaches its end, the player returns to the stopped state.
+  allSounds.forEach((sound) => {
+    sound.addEventListener('ended', () => {
+      if (sound === currentSound) stopAll();
+    });
+  });
+
+  trackButtons.forEach((trackButton) => {
+    trackButton.disabled = trackButton === aButton;
+  });
+  playButton.disabled = false;
+  stopButton.disabled = true;
+  showPlaying(false);
+  updateProgress();
 }

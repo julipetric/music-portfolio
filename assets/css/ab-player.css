@@ -1,3 +1,9 @@
+/*
+ * Styles for the A/B(/C) comparison player (layouts/shortcodes/ab-player.html).
+ * Based on AB-Audio-Player by Matt Bartley (MIT License, Copyright (c) 2022 Matt Bartley):
+ * https://github.com/mattbartley/AB-Audio-Player
+ */
+
 .player__wrapper {
   border-radius: 50px;
   background: #e6e6e6;
@@ -89,11 +95,9 @@
 
 .player__wrapper .progress__container {
   display: inline-flex;
-  background: #a8a8a8;
   height: 1rem;
   width: 100%;
   margin-bottom: 2.4rem;
-  border-radius: 10px;
   border-radius: 12px;
   background: #e6e6e6;
   box-shadow: inset 7px 7px 15px #cdcdcd, inset -7px -7px 15px #ffffff;

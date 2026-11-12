@@ -11,7 +11,7 @@ title = 'Viviendo del Reves'
 2. The "preview" file provided by CMT's library
 3. My finished mix (no mastering)
 
-{{< ab-player/index
+{{< ab-player
 data-audio-a="./CEFMallorcaGSSII_ViviendoDelReves_VolumesOnly_without_intro_plus7db.mp3"
 data-audio-c="./ViviendoDelReves_Full_Preview_minus7db.mp3"
 data-audio-b="./CEFMallorcaGSSII_ViviendoDelReves_202505081404_without_intro.mp3" >}}

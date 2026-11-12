@@ -11,7 +11,7 @@ title = 'Kings and Queens'
 2. The "preview" file provided by CMT's library
 3. My finished mix (no mastering)
 
-{{< ab-player/index
+{{< ab-player
 data-audio-a="./thelvnguage_KingsAndQueens_VolumesOnly_nointro_fade.mp3"
 data-audio-c="./KingsAndQueens_Full_Preview_fade_minus9db.mp3"
 data-audio-b="./thelvnguage_KingsAndQueens_202505191528_nointro_minus2db.mp3" >}}
